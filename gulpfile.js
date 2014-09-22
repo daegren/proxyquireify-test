@@ -6,13 +6,11 @@ var glob         = require('glob');
 var proxyquire   = require('proxyquireify');
 
 gulp.task('specs', function() {
-  var entries = glob.sync('./tests/**/*_spec.js');
-
   var bundler = browserify({
     // Required watchify args
     cache: {}, packageCache: {}, fullPaths: true,
     // Specify the entry point of your app
-    entries: entries,
+    entries: './tests/foo_spec.js',
     paths: [
       './node_modules',
       './js'
@@ -28,7 +26,7 @@ gulp.task('specs', function() {
       // desired output filename here.
       .pipe(source('specs.js'))
       // Specify the output destination
-      .pipe(gulp.dest('./'))
+      .pipe(gulp.dest('./'));
   };
 
   bundler = watchify(bundler);
@@ -37,3 +35,5 @@ gulp.task('specs', function() {
 
   return bundle();
 });
+
+gulp.task('default', ['specs']);
